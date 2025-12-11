@@ -1,28 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_realloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nkuydin <nkuydin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/27 22:33:52 by nkuydin           #+#    #+#             */
-/*   Updated: 2025/08/28 18:19:54 by nkuydin          ###   ########.fr       */
+/*   Created: 2025/12/08 21:10:10 by nkuydin           #+#    #+#             */
+/*   Updated: 2025/12/08 22:43:05 by nkuydin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_bzero(void *str, unsigned int n)
+char	*ft_realloc(char *ptr, size_t size)
 {
-	unsigned int	i;
-	unsigned char	*temp;
+	char	*newptr;
+	int		i;
+	int		old_size;
 
 	i = 0;
-	temp = str;
-	while (n > 0)
+	if (ptr == NULL)
+		return (malloc(size));
+	old_size = ft_strlen(ptr);
+	newptr = malloc(old_size + size);
+	if (!newptr)
+		return (NULL);
+	while (i <= old_size)
 	{
-		temp[i] = '\0';
-		n--;
+		newptr[i] = ptr[i];
 		i++;
 	}
+	free(ptr);
+	return (newptr);
 }

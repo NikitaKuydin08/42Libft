@@ -1,42 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nkuydin <nkuydin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/31 15:36:29 by nkuydin           #+#    #+#             */
-/*   Updated: 2025/08/31 16:38:44 by nkuydin          ###   ########.fr       */
+/*   Created: 2025/08/31 19:18:03 by nkuydin           #+#    #+#             */
+/*   Updated: 2025/12/02 12:19:52 by nkuydin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strjoin(const char *s1, const char *s2)
+void	ft_putendl_fd(char *str, int fd)
 {
-	int		i;
-	int		j;
-	int		s1_len;
-	int		s2_len;
-	char	*tab;
+	int	i;
 
 	i = 0;
-	j = 0;
-	s1_len = ft_strlen(s1);
-	s2_len = ft_strlen(s2);
-	tab = ft_calloc(s1_len + s2_len + 1, sizeof(char));
-	if (!tab)
-		return (0);
-	while (s1[i])
+	while (str[i])
 	{
-		tab[i] = s1[i];
+		write(fd, &str[i], 1);
 		i++;
 	}
-	while (s2[j])
-	{
-		tab[i + j] = s2[j];
-		j++;
-	}
-	tab[i + j] = '\0';
-	return (tab);
+	write(fd, "\n", 1);
 }

@@ -6,7 +6,7 @@
 /*   By: nkuydin <nkuydin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 14:00:16 by nkuydin           #+#    #+#             */
-/*   Updated: 2025/09/03 23:52:34 by nkuydin          ###   ########.fr       */
+/*   Updated: 2025/09/26 19:18:24 by nkuydin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,7 @@ char	*ft_strtrim(const char *str, char const *set)
 	len1 = count(str, set);
 	str_len = ft_strlen(str);
 	while (str_len > len1 && char_to_del(set, str[str_len - 1]) == 1)
-	{
 		str_len--;
-	}
 	buffer = (char *)malloc(sizeof(char) * (str_len - len1 + 1));
 	if (!buffer)
 		return (0);

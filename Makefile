@@ -6,53 +6,73 @@
 #    By: nkuydin <nkuydin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/27 22:09:20 by nkuydin           #+#    #+#              #
-#    Updated: 2025/09/06 19:47:35 by nkuydin          ###   ########.fr        #
+#    Updated: 2025/12/08 22:06:21 by nkuydin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -I ./includes
 
-SRCS = ft_strncmp.c ft_strlen.c ft_strlcpy.c \
-		ft_strlcat.c ft_strdup.c ft_memset.c \
-		ft_memmove.c ft_memcpy.c ft_isprint.c \
-		ft_isdigit.c ft_isascii.c ft_isalpha.c \
-		ft_isalnum.c ft_bzero.c ft_atoi.c \
-		ft_memcmp.c ft_strchr.c ft_strrchr.c \
-		ft_memchr.c ft_strnstr.c ft_toupper.c \
-		ft_tolower.c ft_calloc.c ft_substr.c \
-		ft_strjoin.c ft_putchar_fd.c ft_putstr_fd.c \
-		ft_putendl_fd.c ft_putnbr_fd.c ft_itoa.c \
-		ft_strmapi.c ft_striteri.c ft_strtrim.c \
-		ft_split.c \
+SRCS_DIR = srcs/
+OBJS_DIR = objects/
 
-BONUS = ft_lstnew_bonus.c ft_lstadd_front_bonus.c \
-		ft_lstsize_bonus.c ft_lstlast_bonus.c \
-		ft_lstadd_back_bonus.c ft_lstdelone_bonus.c \
-		ft_lstclear_bonus.c ft_lstiter_bonus.c \
-		ft_lstmap_bonus.c \
+IS_DIR = ft_is/
+FTIS = ft_isalnum ft_isalpha ft_isascii ft_isdigit ft_isprint
 
-OBJS = ${SRCS:.c=.o}
-BONUS_OBJS = ${BONUS:.c=.o}
+LST_DIR = ft_lst/
+FTLST = ft_lstadd_back ft_lstadd_front ft_lstclear ft_lstdelone \
+		ft_lstiter ft_lstlast ft_lstmap ft_lstnew ft_lstsize
 
-.c.o:
-	${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
+MEM_DIR = ft_mem/
+FTMEM = ft_bzero ft_calloc ft_memchr ft_memcmp ft_memcpy ft_memmove \
+			ft_realloc
 
-${NAME}: ${OBJS} Makefile libft.a
-	ar rc ${NAME} ${OBJS}
+PRINTF_DIR = ft_printf/
+FTPRINTF = ft_print_unsigned ft_printhex ft_printint ft_printptr \
+			ft_printstr ft_printf
 
-bonus: ${BONUS_OBJS} all
-	ar rcs ${NAME} ${BONUS_OBJS}
+PUT_DIR = ft_put/
+FTPUT = ft_putchar_fd ft_putendl_fd ft_putnbr_fd ft_putstr_fd \
+
+STR_DIR = ft_str/
+FTSTR = ft_split ft_strchr ft_strdup ft_striteri ft_strjoin \
+		ft_strlcat ft_strlcpy ft_strlen ft_strmapi ft_strncmp \
+		ft_strnstr ft_strrchr ft_strtrim ft_substr
+
+TO_DIR = ft_to/
+FTTO = ft_atoi ft_itoa ft_tolower ft_toupper
+
+GNL_DIR = gnl/
+GNL = get_next_line
+
+SRCS_FILES += $(addprefix ${IS_DIR}, ${FTIS})
+SRCS_FILES += $(addprefix ${LST_DIR}, ${FTLST})
+SRCS_FILES += $(addprefix ${MEM_DIR}, ${FTMEM})
+SRCS_FILES += $(addprefix ${PRINTF_DIR}, ${FTPRINTF})
+SRCS_FILES += $(addprefix ${PUT_DIR}, ${FTPUT})
+SRCS_FILES += $(addprefix ${STR_DIR}, ${FTSTR})
+SRCS_FILES += $(addprefix ${TO_DIR}, ${FTTO})
+SRCS_FILES += $(addprefix ${GNL_DIR}, ${GNL})
+
+SRCS = $(addprefix $(SRCS_DIR), $(addsuffix .c, ${SRCS_FILES}))
+OBJS = $(addprefix ${OBJS_DIR}, $(addsuffix .o, $(SRCS_FILES)))
+
+${OBJS_DIR}%.o: ${SRCS_DIR}%.c
+	@mkdir -p ${dir $@}
+	${CC} ${CFLAGS} -c $< -o $@
 
 all: ${NAME}
 
+${NAME}: ${OBJS}
+	ar rcs ${NAME} ${OBJS}
+
 clean: 
-	rm -f ${OBJS} ${BONUS_OBJS}
+	@rm -rf ${OBJS_DIR}
 
 fclean: clean
-	rm -f ${NAME}
+	@rm -rf ${NAME}
 
 re: fclean all
 

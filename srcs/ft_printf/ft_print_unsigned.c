@@ -1,29 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*   ft_print_unsigned.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nkuydin <nkuydin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/29 16:51:47 by nkuydin           #+#    #+#             */
-/*   Updated: 2025/08/29 17:29:07 by nkuydin          ###   ########.fr       */
+/*   Created: 2025/09/19 08:37:15 by nkuydin           #+#    #+#             */
+/*   Updated: 2025/10/22 13:48:32 by nkuydin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strrchr(const char *str, int chr)
+int	ft_print_unsigned(unsigned int nb)
 {
-	int	i;
+	int		length;
+	char	result;
 
-	i = 0;
-	while (str[i])
-		i++;
-	while (i >= 0)
+	length = 0;
+	if (nb < 10)
 	{
-		if (str[i] == (char) chr)
-			return ((char *) &str[i]);
-		i--;
+		result = nb + '0';
+		length += write(1, &result, 1);
 	}
-	return (0);
+	if (nb >= 10)
+	{
+		length += ft_print_unsigned(nb / 10);
+		length += ft_print_unsigned(nb % 10);
+	}
+	return (length);
 }
